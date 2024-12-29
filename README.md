@@ -42,6 +42,7 @@ _Result_ and _Option_ enums are used instead of exceptions.
 ## Types of projects - Binaries & Libraries
 ![Binary vs Library](image-1.png)
 
-> cargo init
-> cargo run
-> cargo add <crate_name>
+## Commands
+- > cargo init
+- > cargo run
+- > cargo add <crate_name>
