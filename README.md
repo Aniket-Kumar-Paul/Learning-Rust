@@ -20,7 +20,6 @@ Recommended tool for managing rust versions & associated tools
 ## Memory Management
 Rust doesn’t use a garbage collector. You'll need to:
 - Use smart pointers like _Box, Rc, and RefCell_.
-- Learn about stack vs. heap allocation.
 
 ## Error Handling
 _Result_ and _Option_ enums are used instead of exceptions.
@@ -42,3 +41,7 @@ _Result_ and _Option_ enums are used instead of exceptions.
 
 ## Types of projects - Binaries & Libraries
 ![Binary vs Library](image-1.png)
+
+> cargo init
+> cargo run
+> cargo add <crate_name>
