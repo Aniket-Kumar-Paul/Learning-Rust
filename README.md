@@ -42,6 +42,18 @@ _Result_ and _Option_ enums are used instead of exceptions.
 ## Types of projects - Binaries & Libraries
 ![Binary vs Library](image-1.png)
 
+## Memory Management
+- Stack
+    - Data whose size can be determined during compile time goes into stack, i.e static
+    - Smaller in size
+    - Faster
+    - Used for small, fixed-size variables and function call information (eg. numbers, booleans, fixed size arrays, structs, references)
+- Heap
+    - For dynamic memory allocation, allocated at run time
+    - Much larger in size
+    - Slower due to dynamic allocation and deallocation
+    - Used for dynamic and large data structures that can't fit in stack (eg. strings, vec, hasmap, box)
+
 ## Commands
 - > cargo init
 - > cargo run
