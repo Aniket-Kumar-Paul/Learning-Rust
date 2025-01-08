@@ -46,6 +46,19 @@ fn main() {
         Ok(content) => println!("{}", content),
         Err(err) => println!("Error: {}", err)
     }
+
+
+
+    // Collections
+    // Vectors
+    // let mut vec = Vec::new();
+    // vec.push(1);
+    // vec.push(2);
+    // vec.push(3);
+    // vec.push(4);
+    let mut vec = vec![1,2,3,4]; // same as above
+    even_filter(&mut vec);
+    println!("{:?}", vec);
 }
 
 // if-else, function, loops
@@ -129,5 +142,17 @@ fn find_first_a(s: String) -> Option<i32> {
     }
     return None;
 }
-
 // Result enum lets you return either Ok value or Err value (used for error handling)
+
+
+// Vector
+fn even_filter(vec: &mut Vec<i32>){
+    let mut i = 0;
+    while i<v.len() {
+        if v[i]%2 != 0 {
+            v.remove(i);
+        } else {
+            i+=1;
+        }
+    }
+}

@@ -110,6 +110,15 @@ How memory management happens?
     > println!("{}", a2) -----> aniket
 
 - NOTE: At any given point, you can either have one mutable reference or any no. of immutable references
+
+## Collections
+- Data structures
+- Can contain multiple values
+- Data these collections point to is stored on the heap
+### Vectors
+- store more than one value in a single DS that puts all values next to each other in memory
+
+
 ## Commands
 - > cargo init
 - > cargo run
