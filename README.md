@@ -115,9 +115,22 @@ How memory management happens?
 - Data structures
 - Can contain multiple values
 - Data these collections point to is stored on the heap
+
 ### Vectors
 - store more than one value in a single DS that puts all values next to each other in memory
 
+### Hashmaps
+- stores a key value pair in rust
+
+### Iterators
+1. **Iter** : If you want immutable references to the inner variables & don't want to transfer ownership
+2. **IterMut** : If you want mutable references to the inner variables & don't want to transfer ownership
+3. **IterInto** : If you want to move the variable into the iterator and don't want to use it afterwards (By default)
+- **Consuming Adaptors** : Methods that call next are called consuming adaptors, because calling them uses up the iterator
+- **Iterator Adaptors** : Methods defined on the iterator trait that don't consume the iterator. Instead, they produce different iterators by changing some aspect of the original iterator.
+
+How do you know if a function is consuming adaptor or iterator adaptor?
+- Check the function's definition, if it takes _self_, it's becoming an owner and is a consuming one, if it takes _&self_, it's simply borrowing
 
 ## Commands
 - > cargo init

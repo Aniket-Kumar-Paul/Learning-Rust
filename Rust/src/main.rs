@@ -1,4 +1,5 @@
-use std::fs::read_to_string;
+use core::prelude::v1;
+use std::{collections::HashMap, fs::read_to_string};
 
 fn main() {
     let ans = fib(10);
@@ -50,6 +51,7 @@ fn main() {
 
 
     // Collections
+
     // Vectors
     // let mut vec = Vec::new();
     // vec.push(1);
@@ -59,6 +61,67 @@ fn main() {
     let mut vec = vec![1,2,3,4]; // same as above
     even_filter(&mut vec);
     println!("{:?}", vec);
+
+    // HashMap
+    let mut users = HashMap::new();
+    users.insert(String::from("Aniket"), 22);
+    users.insert(String::from("Aniket"), 23); // overwrites the value
+    let first_user_age = users.get("Aniket"); // Returns Option<>
+    match first_user_age {
+        Some(age) => println!("First user's age is {}", age),
+        None => println!("No user found")
+    }
+    for (key, value) in users.iter() { // Iterator in hashmap
+        println!("{}: {}", key, value);
+    }
+
+    // Iterators
+    // iter() -> provides a way to iterate over the elements of a collection by borrowing them => you can't mutate the elements
+    let mut v1 = vec![1,2,3,4,5,6,7,8,9,10];
+    let v1_iter1 = v1.iter();
+    for val in v1_iter1 { 
+        println!("{}", val); 
+    }
+    // let mut v1_iter1 = v1.iter();
+    // while let Some(val) = v1_iter1.next() {
+    //     println!("{}", val);
+    // }
+    
+    // iter_mut() -> mutable iterator
+    let mut v1_iter2 = v1.iter_mut();
+    for val in v1_iter2 { 
+        *val += 1; 
+    }
+    println!("{:?}", v1);
+
+    // into_iter() -> same as iter, except that it consumes the collection and takes ownership of the elements (has performance benefits)
+    let mut v1_iter3 = v1.into_iter();
+    for val in v1_iter3 {  // same if we directly use v1
+        println!("{}", val); 
+    }
+    // println!("{:?}", v1); // will throw error as v1 is already consumed
+
+    // Consuming adaptors
+    let vec1 = vec![1,2,3];
+    let vec1_iter = vec1.iter();
+    let total: i32 = vec1_iter.sum();
+    assert_eq!(total, 6);
+    // let total_again = vec1_iter.sum(); // vec1_iter can't be used again
+
+    // Iterator adaptors
+    let vec123 = vec![1,2,3];
+    let iter123_1 = vec123.iter();
+    let iter123_2 = iter123_1.map(|x| x+1);
+    // let iter123_3 = iter123_2.filter(|x| *x%2==0);
+    for x in iter123_2 { 
+        println!("{}", x); // prints 2 3 4
+    }
+    println!("{:?}", vec123); // prints 1 2 3
+
+    // Q1. Filter all odd values of a vector then double each value & create a new vector
+    let v_new = vec![1,2,3,4,5,6,7,8,9,10];
+    let ans = filter_and_map(v_new);
+    println!("{:?}", ans);
 }
 
 // if-else, function, loops
@@ -146,7 +209,7 @@ fn find_first_a(s: String) -> Option<i32> {
 
 
 // Vector
-fn even_filter(vec: &mut Vec<i32>){
+fn even_filter(v: &mut Vec<i32>){
     let mut i = 0;
     while i<v.len() {
         if v[i]%2 != 0 {
@@ -155,4 +218,11 @@ fn even_filter(vec: &mut Vec<i32>){
             i+=1;
         }
     }
+}
+
+// Q1. 
+fn filter_and_map(v: Vec<i32>) -> Vec<i32> {
+    let new_iter = v.iter().filter(|x| *x%2==1).map({|x| x*2});
+    let new_vec: Vec<i32> = new_iter.collect(); // collect() method converts iterator to vector
+    return new_vec;
 }
