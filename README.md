@@ -109,7 +109,7 @@ How memory management happens?
     > println!("{}", a1) -----> valid
     > println!("{}", a2) -----> aniket
 
-- NOTE: At any given point, you can either have one mutable reference or any no. of immutable references
+- **NOTE**: _At any given point, you can either have one mutable reference or any no. of immutable references_
 
 ## Collections
 - Data structures
@@ -131,6 +131,15 @@ How memory management happens?
 
 How do you know if a function is consuming adaptor or iterator adaptor?
 - Check the function's definition, if it takes _self_, it's becoming an owner and is a consuming one, if it takes _&self_, it's simply borrowing
+
+## Strings Vs Slices
+- **String** type is provided by rust's std. library rather than coded into the core language. It is a growable, mutable, owned, UTF-8 encoded string type. when you create a string, the data gets stored in the heap, and the metadata in stack(pointer, length, capacity).
+- **String Slice (&str)** is UTF-8 encoded as well. Slices lets you reference a contiguous sequence of elements in a collection rather than the whole collection. It is a kind of reference, so it does not have ownership.
+
+- _3 types of commonly used strings_
+1. let name = String::from("hello world"); // string type
+2. let string_slice = &name; // has a view into the original string/is a reference
+3. let string_literal = "hello"; // literal is also an &str but it points directly to an address in the binary
 
 ## Commands
 - > cargo init

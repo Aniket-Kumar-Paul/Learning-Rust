@@ -1,5 +1,5 @@
 use core::prelude::v1;
-use std::{collections::HashMap, fs::read_to_string};
+use std::{collections::HashMap, fs::read_to_string, string};
 
 fn main() {
     let ans = fib(10);
@@ -122,6 +122,33 @@ fn main() {
     let v_new = vec![1,2,3,4,5,6,7,8,9,10];
     let ans = filter_and_map(v_new);
     println!("{:?}", ans);
+
+
+    // Strings
+    let mut name = String::from("Aniket"); // creation
+    name.push_str(" Paul"); // mutation
+    println!("{}", name);
+    name.replace_range(6..name.len(), ""); // deletion
+    println!("{}", name);
+
+    // let mut word = String::from("Hello world");
+    // let word2  = &word[0..5]; // slicing
+    // # At any given point, you can either have one mutable reference or any no. of immutable references
+    // therefore, the below code will throw an error as clear() method takes mutable reference
+    // word.clear();
+    // println!("{}", word2);
+
+    // Slices (memory safe)
+    // Q2 Write a function that takes a string and returns the first word it finds in that string
+    let s = String::from("hello world");
+    let word = first_word(&s);
+    println!("{}", word);
+    
+    // Generics
+    let bigger = largest(1, 2);
+    let bigger_char = largest('a', 'b');
+    println!("{}", bigger);
+    println!("{}", bigger_char);
 }
 
 // if-else, function, loops
@@ -225,4 +252,43 @@ fn filter_and_map(v: Vec<i32>) -> Vec<i32> {
     let new_iter = v.iter().filter(|x| *x%2==1).map({|x| x*2});
     let new_vec: Vec<i32> = new_iter.collect(); // collect() method converts iterator to vector
     return new_vec;
+}
+
+// Q2.
+// Using string
+// fn first_word(s: String) -> String {
+//     let mut ans = String::from("");
+//     for i in s.chars() {
+//         if i == ' ' {
+//             break;
+//         }
+//         ans.push_str(&i.to_string());
+//     }
+//     return ans;
+// }
+// Problem --> 
+// 1. We are taking ownership of the string
+// 2. We take up double the memory
+// 3. If the `s` string gets cleared, the `word` string will still be there
+
+// What we want is a `view` into the original string & not copy it over
+// Using Slices
+fn first_word(s: &String) -> &str {
+    let mut space_index = 0;
+    for i in s.chars() {
+        if i == ' ' {
+            break;
+        }
+        space_index += 1;
+    }
+    return &s[0..space_index];
+}
+
+// Generics
+fn largest<T: std::cmp::PartialOrd>(a: T, b: T) -> T {
+    if a > b {
+        a
+    } else {
+        b
+    }
 }
