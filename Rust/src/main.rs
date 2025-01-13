@@ -149,6 +149,14 @@ fn main() {
     let bigger_char = largest('a', 'b');
     println!("{}", bigger);
     println!("{}", bigger_char);
+
+    // Trait
+    let users = UserStruct {
+        name: String::from("Aniket"),
+        age: 22
+    };
+    println!("{}", users.summarize());
+    notify(&users);
 }
 
 // if-else, function, loops
@@ -292,3 +300,30 @@ fn largest<T: std::cmp::PartialOrd>(a: T, b: T) -> T {
         b
     }
 }
+
+// Trait
+pub trait Summary {
+    fn summarize(&self) -> String; // you can write the function implementation here as well, which will be used as the default implementation, if not implemented by the struct
+}
+pub trait Fix {
+    fn fix(&self) -> String {
+        String::from("Fixed")
+    }
+}
+struct UserStruct {
+    name: String,
+    age: u32
+}
+impl Summary for UserStruct {
+    fn summarize(&self) -> String {
+        format!("Name: {}, Age: {}", self.name, self.age)
+    }
+}
+impl Fix for UserStruct {}
+
+// Traits as parameters
+pub fn notify(item: &impl Summary) { // this function can take any type that implements Summary trait
+    println!("Summary: {}", item.summarize());
+}
+// the above function internally converts into trait bounds, something like...
+// pub fn notify<T: Summary + Fix>(item: &T)  ----> input should be implementing both Summary and Fix traits

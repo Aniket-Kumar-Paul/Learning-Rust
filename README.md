@@ -141,6 +141,12 @@ How do you know if a function is consuming adaptor or iterator adaptor?
 2. let string_slice = &name; // has a view into the original string/is a reference
 3. let string_literal = "hello"; // literal is also an &str but it points directly to an address in the binary
 
+## Traits: Defining shared behavior
+- similar to interfaces in other languages
+- defines the functionality a particular type has & can share with other types
+- define shared behavior in an abstract way
+- we can use trait bounds to specify that a generic type can be any type that has certain behavior
+
 ## Commands
 - > cargo init
 - > cargo run
