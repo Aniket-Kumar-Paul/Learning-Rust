@@ -1,5 +1,4 @@
-use core::prelude::v1;
-use std::{collections::HashMap, fs::read_to_string, string, time::Duration, thread};
+use std::{collections::HashMap, fs::read_to_string, string, sync::mpsc, thread, time::Duration};
 
 fn main() {
     let ans = fib(10);
@@ -138,7 +137,7 @@ fn main() {
     // println!("{}", word2);
 
     // Slices (memory safe)
-    // Q2 Write a function that takes a string and returns the first word it finds in that string
+    // Q2. Write a function that takes a string and returns the first word it finds in that string
     let s = String::from("hello world");
     let word = first_word(&s);
     println!("{}", word);
@@ -196,6 +195,8 @@ fn main() {
         }
     });
     // join -> wait until the handle thread completes executing
+    // unwrap -> when the returned type is a Result type, but we're sure that it won't error/don't care, we can simply unwrap to get the Ok value 
+    // |---- (Bad coding practice to unwrap, use pattern matches instead to handle errors)
     handle.join().unwrap();
     // main thread
     for i in 1..5 {
@@ -213,6 +214,41 @@ fn main() {
         // println!("{:?}", v); // will give error as ownership has been moved
     }
     println!("{}", x);
+
+    // Message Passing
+    // mpsc -> multiple producer, single consumer
+    // Eg. we can have multiple producer threads spawned, and the main thread as the consumer
+    let (transmitter, receiver) = mpsc::channel();
+    thread::spawn(move || {
+        let val = String::from("hi");
+        transmitter.send(val).unwrap();
+    });
+    let received = receiver.recv().unwrap();
+    println!("{}", received);
+
+    // Q3. Write code that finds sum from 1 - 10^8. Use multiple threads to do this.
+    let (tx, rx) = mpsc::channel();
+    for i in 0..3 { // using 3 threads
+        let producer = tx.clone();
+        thread::spawn(move || {
+            let mut sum:u64 = 0;
+            for j in i*10000000..(i+1*10000000)-1 {
+                sum = sum+j;
+            }
+            producer.send(sum).unwrap();
+        });
+    }
+    drop(tx); // drop tx after all the threads have been spawned
+
+    let mut ans:u64 = 0;
+    // this will wait until all the threads have sent their values
+    // PROBLEM: all cloned tx threads might be over, but tx will still remain open, so the loop will keep on waiting
+    // SOLUTION: use drop(tx) after all the threads have been spawned
+    for val in rx { 
+        ans = ans + val;
+        println!("found value");
+    }
+    println!("{}", ans);
 }
 
 // if-else, function, loops

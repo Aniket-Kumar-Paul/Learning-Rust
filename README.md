@@ -154,6 +154,11 @@ How do you know if a function is consuming adaptor or iterator adaptor?
 - **Concurrency** (logical, multitasking but actually doing one thing at a time, using time slicing, switching etc. on a single core) VS **Parallelism** (physical, multitasking by running multiple threads on multiple cores simultaneously)
 - **move** - we'll use the move keyword with closures passed to thread::spawn because the closure will then take ownership of the values it uses from the environment, thus transferring ownership of those values from one thread to another
 
+## Message Passing
+- Threads communicate by sending each other msgs containing data
+- Rust has **channels** for this. A **channel** is a general proggramming concept by which data is sent from one thread to another.
+- A **Channel** has 2 halves: a transmitter & a receiver. Msg flows from transmitter to receiver. A channel is said to be closed if either of the half is dropped.
+
 ## Commands
 - > cargo init
 - > cargo run
