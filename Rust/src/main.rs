@@ -49,7 +49,6 @@ fn main() {
     }
 
 
-
     // Collections
 
     // Vectors
@@ -157,6 +156,35 @@ fn main() {
     };
     println!("{}", users.summarize());
     notify(&users);
+
+    // Lifetime
+    let ans;
+    let str1 = String::from("Aniket");
+    // Below code will throw error as the lifetime of ans ends with str2 with the scope ending
+    // {
+    //     let str2 = String::from("Kumar Paul");
+    //     ans = longest(&str1, &str2);
+    // }
+    let str2 = String::from("Kumar Paul");
+    ans = longest(&str1, &str2);
+    println!("{}", ans);
+
+    // Lifetime in structs
+    let first_name = String::from("Aniket");
+    // Below code will throw error
+    // {
+    //     let last_name = String::from("Paul");
+    //     let user12 = MyUser {
+    //         first_name: &first_name,
+    //         last_name: &last_name
+    //     };
+    // }
+    let last_name = String::from("Paul");
+    let user12 = MyUser {
+        first_name: &first_name,
+        last_name: &last_name
+    };
+    println!("{}", user12.first_name);
 }
 
 // if-else, function, loops
@@ -327,3 +355,39 @@ pub fn notify(item: &impl Summary) { // this function can take any type that imp
 }
 // the above function internally converts into trait bounds, something like...
 // pub fn notify<T: Summary + Fix>(item: &T)  ----> input should be implementing both Summary and Fix traits
+  
+// Lifetime
+// The 'a descries a relationship b/w lifetimes of i/p and o/p args
+// The below syntax tells that the returned reference will have the same lifetime as intersection/shorter of the lifetimes of the input references
+// It says the 'return type' will be valid as long as both the input references are valid
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+// Lifetime in Structs
+// Here, we're basically saying the object of a myUser struct is valid only until the name reference passed to it is valid
+struct MyUser<'a, 'b> {
+    first_name: &'a str,
+    last_name: &'b str
+}
+
+// Generic type parameters, Trait bounds, Lifetimes all in one function
+fn longest_with_an_announcement<'a, T> (
+    x: &'a str,
+    y: &'a str,
+    announcement: T
+) -> &'a str
+where 
+    T: std::fmt::Display // Display is a trait that std library provides. T should implement Display trait
+{
+    println!("Announcement: {announcement}");
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}

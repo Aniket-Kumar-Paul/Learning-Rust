@@ -147,6 +147,9 @@ How do you know if a function is consuming adaptor or iterator adaptor?
 - define shared behavior in an abstract way
 - we can use trait bounds to specify that a generic type can be any type that has certain behavior
 
+## Lifetime
+- _'a_ -> Generic Lifetime annotation
+
 ## Commands
 - > cargo init
 - > cargo run
