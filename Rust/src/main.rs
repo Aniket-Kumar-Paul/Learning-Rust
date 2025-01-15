@@ -1,5 +1,5 @@
 use core::prelude::v1;
-use std::{collections::HashMap, fs::read_to_string, string};
+use std::{collections::HashMap, fs::read_to_string, string, time::Duration, thread};
 
 fn main() {
     let ans = fib(10);
@@ -185,6 +185,34 @@ fn main() {
         last_name: &last_name
     };
     println!("{}", user12.first_name);
+
+    // Multithreading
+    let sum = 0;
+    // spawned thread
+    let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from the spawned thread!");
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
+    // join -> wait until the handle thread completes executing
+    handle.join().unwrap();
+    // main thread
+    for i in 1..5 {
+        println!("hi number {i} from the main thread!");
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    // move
+    let x = 1;
+    {
+        let v = vec![1,2,3];
+        thread::spawn(move || { // move ownership of v to the thread
+            println!("{:?}", v);
+        });
+        // println!("{:?}", v); // will give error as ownership has been moved
+    }
+    println!("{}", x);
 }
 
 // if-else, function, loops

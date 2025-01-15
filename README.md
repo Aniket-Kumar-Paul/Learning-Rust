@@ -150,6 +150,10 @@ How do you know if a function is consuming adaptor or iterator adaptor?
 ## Lifetime
 - _'a_ -> Generic Lifetime annotation
 
+## MultiThreading
+- **Concurrency** (logical, multitasking but actually doing one thing at a time, using time slicing, switching etc. on a single core) VS **Parallelism** (physical, multitasking by running multiple threads on multiple cores simultaneously)
+- **move** - we'll use the move keyword with closures passed to thread::spawn because the closure will then take ownership of the values it uses from the environment, thus transferring ownership of those values from one thread to another
+
 ## Commands
 - > cargo init
 - > cargo run
