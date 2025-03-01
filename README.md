@@ -79,35 +79,35 @@ How memory management happens?
 
 ## Moving
 -  Eg. Owner of the string aniket gets moved from variable a1 to a2 (can have only one owner)
-    > let a1 = String::from("aniket);
-    > let a2 = a1;              // to copy, use a1.clone()
-    > println!("{}", a1) -----> Invalid, won't compile
-    > println!("{}", a2) -----> aniket
+    - > let a1 = String::from("aniket);
+    - > let a2 = a1;              // to copy, use a1.clone()
+    - > println!("{}", a1) -----> Invalid, won't compile
+    - > println!("{}", a2) -----> aniket
 
 - let say we had a fn print_str(s: String), then
     - let a2 = a1; is same as print_str(a1); // a1 is moved
     - but you can get ownership back by returning the value as well, i.e (assuming a1 is mutable)
-    > a1 = print_str(a1)
-    > ...
-    > fn print_str(a: String) -> String {
-        println!("{}", a);
-        return a; // moving back ownership
-    }
+    - > a1 = print_str(a1)
+    - > ...
+    - > fn print_str(a: String) -> String {
+    - >    println!("{}", a);
+    - >    return a; // moving back ownership
+    - > }
 
 ## Borrowing
 - Instead of returning value to return ownership, we can use references.
 - Eg. 
 1. Here, a1 owns the value throughout, and let's the function borrow it using the &
-  > let a1 = String::from("aniket);
-  > print_str(&a1); // to make it mutable, use &mut a1 instead (NOTE: a1 should be made mut as well then)
-  > ...
-  > fn print_str(a: &String) -> String { // to make it mutable, use &mut String
-    println!("{}", a);
-  }
-2.  > let a1 = String::from("aniket);
-    > let a2 = &a1;              // a1, a2 points to same value, but owner is stll a1
-    > println!("{}", a1) -----> valid
-    > println!("{}", a2) -----> aniket
+  - > let a1 = String::from("aniket);
+  - > print_str(&a1); // to make it mutable, use &mut a1 instead (NOTE: a1 should be made mut as well then)
+  - > ...
+  - > fn print_str(a: &String) -> String { // to make it mutable, use &mut String
+  - >  println!("{}", a);
+  - > }
+2.  - > let a1 = String::from("aniket);
+    - > let a2 = &a1;              // a1, a2 points to same value, but owner is stll a1
+    - > println!("{}", a1) -----> valid
+    - > println!("{}", a2) -----> aniket
 
 - **NOTE**: _At any given point, you can either have one mutable reference or any no. of immutable references_
 
